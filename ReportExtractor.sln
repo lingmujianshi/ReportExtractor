@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractor", "ReportExtractor\ReportExtractor.csproj", "{9724321E-ACEC-410C-9D7F-B486236C5D78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractor.Domain", "ReportExtractor.Domain\ReportExtractor.Domain.csproj", "{1DF304FA-CD39-4689-8EEF-5C72BE01C190}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractorTest", "ReportExtractorTest\ReportExtractorTest.csproj", "{2290CFCA-7E2F-444A-915B-A0A82D15156A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{9724321E-ACEC-410C-9D7F-B486236C5D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9724321E-ACEC-410C-9D7F-B486236C5D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9724321E-ACEC-410C-9D7F-B486236C5D78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF304FA-CD39-4689-8EEF-5C72BE01C190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF304FA-CD39-4689-8EEF-5C72BE01C190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF304FA-CD39-4689-8EEF-5C72BE01C190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF304FA-CD39-4689-8EEF-5C72BE01C190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
