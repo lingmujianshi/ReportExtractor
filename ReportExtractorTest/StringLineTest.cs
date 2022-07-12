@@ -24,7 +24,7 @@ namespace ReportExtractorTest
 
             str.GetEndPos(0).Is(5);
             str.GetEndPos(6).Is(10);
-            str.GetEndPos(13).Is(16);
+            str.GetEndPos(13).Is(17);
         }
 
         [TestMethod]

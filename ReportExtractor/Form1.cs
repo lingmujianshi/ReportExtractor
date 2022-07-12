@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ReportExtractor.Domain;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -124,31 +125,14 @@ namespace ReportExtractor
         SelectionInfo GetCurrentLine()
         {
             string str = richTextBox1.Text;
-            int selectPos = richTextBox1.SelectionStart;
-            int row = 1;
-            int startPos = 0;
-            int endPos = 0;
-
-            while (true)
-            {
-                endPos = str.IndexOf('\n', startPos);
-                if (endPos == -1)
-                {
-                    endPos = str.Length;
-                    break;
-                }
-                else if (endPos < selectPos)
-                {
-                    row++;
-                    startPos = endPos + 1;
-                    continue;
-                }
-
-                break;
-            }
-
-            return new SelectionInfo { Start = startPos, Length = endPos - startPos};
+            int start = richTextBox1.SelectionStart;
+            int end = start + richTextBox1.SelectionLength;
+            int startPos = str.GetTopPos(start);
+            int endPos = str.GetEndPos(end);
+            int width = endPos - startPos;
+            return new SelectionInfo { Start = startPos, Length = width };
         }
+        
 
         /// <summary>
         /// 選択範囲の先頭行番号を取得
