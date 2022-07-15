@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetGitDiff.cs" />
+    <Compile Include="OuterCommand.cs" />
     <Compile Include="StringLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

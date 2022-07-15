@@ -3,13 +3,17 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+
 namespace ReportExtractor
 {
     public partial class Form1 : Form
     {
+        Form1ViewModel vm;
+
         public Form1()
         {
             InitializeComponent();
+            vm = new Form1ViewModel();
         }
 
         /// <summary>
@@ -59,7 +63,7 @@ namespace ReportExtractor
             richTextBox1.SelectionFont = fnt;
             baseFont.Dispose();
             fnt.Dispose();
-
+            
             richTextBox1.Select(initSelection.Start, initSelection.Length);
 
         }
@@ -84,7 +88,7 @@ namespace ReportExtractor
 
             richTextBox1.Select(initSelection.Start, initSelection.Length);
         }
-        
+
         /// <summary>
         /// カーソルがある行のフォントを初期状態に戻す
         /// </summary>
@@ -132,7 +136,7 @@ namespace ReportExtractor
             int width = endPos - startPos;
             return new SelectionInfo { Start = startPos, Length = width };
         }
-        
+
 
         /// <summary>
         /// 選択範囲の先頭行番号を取得
@@ -160,6 +164,22 @@ namespace ReportExtractor
             }
 
             return row;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetGitDiff diff = new GetGitDiff();
+            string inStr = diff.Run();
+
+            System.Text.Encoding enc1 = System.Text.Encoding.GetEncoding("Shift-JIS");
+            System.Text.Encoding enc2 = System.Text.Encoding.UTF8;
+
+            byte[] temp = enc1.GetBytes(inStr);
+            string str1 = enc2.GetString(temp);
+
+            richTextBox1.Text = str1;
+            
+            Console.WriteLine("");
         }
     }
 }
