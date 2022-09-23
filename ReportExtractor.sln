@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractor.Domain", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractorTest", "ReportExtractorTest\ReportExtractorTest.csproj", "{2290CFCA-7E2F-444A-915B-A0A82D15156A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportExtractorConsole", "ReportExtractorConsole\ReportExtractorConsole.csproj", "{476C5294-EDB3-4A63-8BCF-3D6B10719777}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2290CFCA-7E2F-444A-915B-A0A82D15156A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C5294-EDB3-4A63-8BCF-3D6B10719777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C5294-EDB3-4A63-8BCF-3D6B10719777}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C5294-EDB3-4A63-8BCF-3D6B10719777}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C5294-EDB3-4A63-8BCF-3D6B10719777}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

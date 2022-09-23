@@ -36,5 +36,17 @@ namespace ReportExtractorTest
             str.GetWidth(6,7).Is(4);
             str.GetWidth(1,7).Is(10);
         }
+
+        [TestMethod]
+        public void 配列格納()
+        {
+            string str = "01234\n6789\nabcdef";
+
+            string[] a = StringLine.GetStringArray(str);
+            a[0].Is<string>("01234");
+            a[1].Is<string>("6789");
+            a[2].Is<string>("abcdef");
+
+        }
     }
 }

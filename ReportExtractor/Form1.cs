@@ -171,13 +171,13 @@ namespace ReportExtractor
             GetGitDiff diff = new GetGitDiff();
             string inStr = diff.Run();
 
-            System.Text.Encoding enc1 = System.Text.Encoding.GetEncoding("Shift-JIS");
-            System.Text.Encoding enc2 = System.Text.Encoding.UTF8;
+            //System.Text.Encoding enc1 = System.Text.Encoding.GetEncoding("Shift-JIS");
+            //System.Text.Encoding enc2 = System.Text.Encoding.UTF8;
 
-            byte[] temp = enc1.GetBytes(inStr);
-            string str1 = enc2.GetString(temp);
+            //byte[] temp = enc1.GetBytes(inStr);
+            //string str1 = enc2.GetString(temp);
 
-            richTextBox1.Text = str1;
+            richTextBox1.Text = inStr;
             
             Console.WriteLine("");
         }

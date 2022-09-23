@@ -57,5 +57,10 @@ namespace ReportExtractor.Domain
             int endPos = str.GetEndPos(AreaEnd);
             return endPos - topPos;
         }
+
+        public static string[] GetStringArray(string str)
+        {
+            return str.Split('\n');
+        } 
     }
 }
