@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalysisDiff.cs" />
+    <Compile Include="Content.cs" />
+    <Compile Include="ContentsEntity.cs" />
     <Compile Include="DiffLineInfo.cs" />
     <Compile Include="GetGitDiff.cs" />
+    <Compile Include="LevelCheck.cs" />
     <Compile Include="OuterCommand.cs" />
     <Compile Include="StringLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

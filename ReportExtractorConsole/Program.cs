@@ -11,14 +11,19 @@ namespace ReportExtractorConsole
     {
         static void Main(string[] args)
         {
-            OuterCommand cmd = new OuterCommand();
+            
             Console.WriteLine("出力");
 
-            String str = cmd.ExeCommandSync("git", @"-C C:\\Users\tsuzuki\Documents\作業・他\浦安工場作業報告 diff");
-            //String str = cmd.ExeCommand("gitdiff.bat", @"");
-            Console.WriteLine(str);
+            var contents = new Content();
+            
             Console.ReadKey();
 
        }
+
+        static void GetGitDiff()
+        {
+            //String str = ExeCommandSync("git", @"-C C:\\Users\tsuzuki\Documents\作業・他\浦安工場作業報告 diff");
+            //Console.WriteLine(str);
+        }
     }
 }
