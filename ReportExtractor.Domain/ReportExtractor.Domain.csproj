@@ -49,7 +49,7 @@
     <Compile Include="GetGitDiff.cs" />
     <Compile Include="HtmlTag.cs" />
     <Compile Include="IGitDiff.cs" />
-    <Compile Include="LevelCheck.cs" />
+    <Compile Include="RegexOp.cs" />
     <Compile Include="OuterCommand.cs" />
     <Compile Include="OutlookMail.cs" />
     <Compile Include="StringLine.cs" />

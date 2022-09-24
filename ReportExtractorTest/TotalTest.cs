@@ -25,6 +25,7 @@ namespace ReportExtractorTest
 
             ContentsEntity contents = new ContentsEntity(report);
             contents.SetStrong(list);
+            contents.SetWrite();
 
             CreateHTML cl = new CreateHTML(contents.Items);
 
@@ -52,6 +53,7 @@ namespace ReportExtractorTest
 
             ContentsEntity contents = new ContentsEntity(report);
             contents.SetStrong(list);
+            contents.SetWrite();
 
             CreateHTML cl = new CreateHTML(contents.Items);
 
@@ -79,6 +81,7 @@ namespace ReportExtractorTest
 
             ContentsEntity contents = new ContentsEntity(report);
             contents.SetStrong(list);
+            contents.SetWrite();
 
             CreateHTML cl = new CreateHTML(contents.Items);
 

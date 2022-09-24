@@ -45,16 +45,15 @@ namespace ReportExtractor.Domain
         /// <returns>レベルEnum</returns>
         private LevelEnum GetLevel(string str)
         {
-            var level = new LevelCheck();
-            if(level.IsHeader1(str))
+            if(RegexOp.IsHeader1(str))
             {
                 return LevelEnum.Header1;
             }
-            else if (level.IsHeader2(str))
+            else if (RegexOp.IsHeader2(str))
             {
                 return LevelEnum.Header2;
             }
-            else if (level.IsHeader3(str))
+            else if (RegexOp.IsHeader3(str))
             {
                 return LevelEnum.Header3;
             }
@@ -81,46 +80,94 @@ namespace ReportExtractor.Domain
                 }
             }
         }
+        
+        List<int> _PList;
+        bool _isP = false;
+        bool _isPSectionWrite = false;
+        int _h1 = 0, _h2 = 0, _h3 = 0;
 
         /// <summary>
         /// IsWrite(記載するかどうか)を設定
         /// </summary>
         public void SetWrite()
         {
-            int h1=0, h2=0, h3=0;
             for (int i = 0; i < _items.Count; i++)
             {
-                // 下位レベルで記載がある場合は上位レベルも記載とする。
+                bool isBlankRow = RegexOp.IsBlankRow(_items[i].Item);
+
+                // スペースやタブだけの行も記載
+                if (isBlankRow)
+                {
+                    PEndProcess();
+                    _items[i].IsWrite = true;
+                }
+                
                 if (_items[i].Level == LevelEnum.Header1)
                 {
-                    h1 = i;
-                    h2 = i;
-                    h3 = i;
+                    PEndProcess();
+                    _h1 = i;
                 }
                 else if (_items[i].Level == LevelEnum.Header2)
                 {
-                    h2 = i;
-                    h3 = i;
+                    PEndProcess();
+                    _h2 = i;
                 }
                 else if (_items[i].Level == LevelEnum.Header3)
                 {
-                    h3 = i;
+                    PEndProcess();
+                    _h3 = i;
+                }
+                else
+                {
+                    if (!_isP && !isBlankRow)
+                    {
+                        PStartProcess();
+                    }
+                    if (!isBlankRow)
+                    {
+                        _PList.Add(i);
+                    }
                 }
 
                 if (_items[i].IsStrong)
                 {
-                    _items[i].IsWrite = true;
-                    _items[h1].IsWrite = true;
-                    _items[h2].IsWrite = true;
-                    _items[h3].IsWrite = true;
+                    //_items[i].IsWrite = true;
+                    if (_isP)
+                    {
+                        _isPSectionWrite = true;
+                    }
                 }
 
-                // スペースやタブだけの行も記載
-                var level = new LevelCheck();
-                if (level.IsBlankRow(_items[i].Item))
+                
+            }
+        }
+
+        void PStartProcess()
+        {
+            _PList = new List<int>();
+            _isP = true;
+            _isPSectionWrite = false;
+
+        }
+
+        void PEndProcess()
+        {
+            if (_isP)
+            {
+                if (_isPSectionWrite)
                 {
-                    _items[i].IsWrite = true;
+                    _items[_h1].IsWrite = true;
+                    _items[_h2].IsWrite = true;
+                    _items[_h3].IsWrite = true;
+
+                    foreach (var i in _PList)
+                    {
+                        _items[i].IsWrite = true;
+                    }
+                    
                 }
+                _isP = false;
+                _isPSectionWrite = false;
             }
         }
     }

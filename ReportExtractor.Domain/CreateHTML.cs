@@ -37,7 +37,7 @@ namespace ReportExtractor.Domain
 
             foreach (Content item in _items)
             {
-                //if (!item.IsWrite) continue;
+                if (!item.IsWrite) continue;
 
                 var line = StrongProcess(item);
 
@@ -62,8 +62,15 @@ namespace ReportExtractor.Domain
                         AddNewLine(ref _section);
                         break;
                     case LevelEnum.None:
-                        StartParagraphProcess();
-                        _paragraph += AddBr(line);
+                        if (line == "")
+                        {
+                            EndParagraphProcess();
+                        }
+                        else
+                        {
+                            StartParagraphProcess();
+                            _paragraph += AddBr(line);
+                        }
                         break;
                 }
             }
@@ -74,7 +81,7 @@ namespace ReportExtractor.Domain
         private string AddBr(string str)
         {
             string res = "";
-            if (str == "")
+            if (RegexOp.IsBlankRow(str))
             {
                 if (_brCount < 1)
                 {

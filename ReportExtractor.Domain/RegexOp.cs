@@ -5,31 +5,30 @@ namespace ReportExtractor.Domain
     /// <summary>
     /// 階層を判定するクラス
     /// </summary>
-    public class LevelCheck
+    public static class RegexOp
     {
-        public bool IsHeader1(string str)
+        public static bool IsHeader1(string str)
         {
-            string pattern = @"^□";
+            string pattern = @"^#[^#]";
             return Regex.IsMatch(str, pattern);
         }
 
-        public bool IsHeader2(string str)
+        public static bool IsHeader2(string str)
         {
-            string pattern = @"^\w";
+            string pattern = @"^##[^#]";
             return Regex.IsMatch(str, pattern);
         }
 
-        public bool IsHeader3(string str)
+        public static bool IsHeader3(string str)
         {
-            string pattern = @"^(\s\s|\t)";
+            string pattern = @"^###[^#]";
             return Regex.IsMatch(str, pattern);
         }
 
-        public bool IsBlankRow(string str)
+        public static bool IsBlankRow(string str)
         {
             string pattern = @"^(\s*|\t*)$";
             return Regex.IsMatch(str, pattern);
         }
-    }
-
+    } 
 }
