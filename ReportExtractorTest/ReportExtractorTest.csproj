@@ -59,6 +59,7 @@
     <Compile Include="LevelCheckTest.cs" />
     <Compile Include="CreateHTMLTest.cs" />
     <Compile Include="OutlookMailTest.cs" />
+    <Compile Include="TotalTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

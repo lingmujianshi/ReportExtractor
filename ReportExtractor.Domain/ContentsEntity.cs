@@ -5,13 +5,17 @@ namespace ReportExtractor.Domain
     public class ContentsEntity
     {
         List<Content> _items;
-        //int _strongListCounter;
 
-        public ContentsEntity(string[] array)
+        /// <summary>
+        /// コンストラクタ
+        /// 1行ごとに読み込んだリストからコンテンツリストを作成する
+        /// </summary>
+        /// <param name="reportList">行に分けられた報告書</param>
+        public ContentsEntity(List<string> reportList)
         {
             _items = new List<Content>();
 
-            foreach (var item in array)
+            foreach (var item in reportList)
             {
                 AddItem(item);
             }

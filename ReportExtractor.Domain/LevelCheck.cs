@@ -31,4 +31,5 @@ namespace ReportExtractor.Domain
             return Regex.IsMatch(str, pattern);
         }
     }
+
 }

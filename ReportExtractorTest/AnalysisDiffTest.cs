@@ -46,26 +46,6 @@ namespace ReportExtractorTest
             analysis.GetPosition(str).Is(99);
         }
 
-        //string _folder = @".\TestData\";
-
-        //string File.ReadTextFile(string filename)
-        //{
-        //    string text = "";
-        //    try
-        //    {
-        //        using (var sr = new StreamReader(_folder + filename, Encoding.GetEncoding("UTF-8")))
-        //        {
-        //            text = sr.ReadToEnd();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        Console.WriteLine(ex.Message);
-        //    }
-        //    return text;
-        //}
-
         [TestMethod]
         public void ポジション開始終了()
         {

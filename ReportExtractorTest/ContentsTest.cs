@@ -11,8 +11,9 @@ namespace ReportExtractorTest
         [TestMethod]
         public void ContentsTest1()
         {
-            string[] array = MyFile.ReadTextFile(@"ContentsTestData.txt").Replace("\r\n","\r").Split('\r');
-            ContentsEntity contents = new ContentsEntity(array);
+            List<string> report = MyFile.ReadTextLines((@"ContentsTestData.txt"));
+            ContentsEntity contents = new ContentsEntity(report);
+
             contents.SetStrong(new List<int>() { 4, 8 ,19});
 
             contents.Items[3].IsStrong.Is(true);
