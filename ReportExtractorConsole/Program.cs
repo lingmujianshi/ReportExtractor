@@ -14,8 +14,9 @@ namespace ReportExtractorConsole
             
             Console.WriteLine("出力");
 
-            var contents = new Content();
-            
+            //var outlook = new OutlookMail();
+            //outlook.CreateMail();
+
             Console.ReadKey();
 
        }

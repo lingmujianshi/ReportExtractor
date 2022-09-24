@@ -51,12 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChainingAssertion.MSTest.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="MyFile.cs" />
     <Compile Include="StringLineTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnalysisDiffTest.cs" />
     <Compile Include="ContentsTest.cs" />
     <Compile Include="LevelCheckTest.cs" />
+    <Compile Include="CreateHTMLTest.cs" />
+    <Compile Include="OutlookMailTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -72,13 +72,13 @@ namespace ReportExtractorTest
             AnalysisDiff analysis = new AnalysisDiff();
             List<DiffLineInfo> infoList = new List<DiffLineInfo>();
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff1.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff1.txt"));
             infoList = analysis.GetLineInfoList();
             infoList[0].Pos.Is(1);
             infoList[0].Start.Is(6);
             infoList[0].End.Is(11);
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff2.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff2.txt"));
             infoList = analysis.GetLineInfoList();
             infoList.Count.Is(10);
 
@@ -122,7 +122,7 @@ namespace ReportExtractorTest
             infoList[9].Start.Is(133);
             infoList[9].End.Is(153);
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff3.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff3.txt"));
             infoList = analysis.GetLineInfoList();
             infoList.Count.Is(4);
             infoList[0].Pos.Is(1);
@@ -150,30 +150,30 @@ namespace ReportExtractorTest
             List<int> list = new List<int>();
             string result,ans;
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff1.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff1.txt"));
             infoList = analysis.GetLineInfoList();
             list = analysis.GetChangedNumbersList(infoList);
             result = string.Join(",", list.ToArray());
             list.Count.Is(1);
-            ans = File.ReadTextFile(@"gitdiff1Array.txt");
+            ans = MyFile.ReadTextFile(@"gitdiff1Array.txt");
             result.Is(ans);
 
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff2.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff2.txt"));
             infoList = analysis.GetLineInfoList();
             list = analysis.GetChangedNumbersList(infoList);
             list.Count.Is(43);
             result = string.Join(",", list.ToArray());
-            ans = File.ReadTextFile(@"gitdiff2Array.txt");
+            ans = MyFile.ReadTextFile(@"gitdiff2Array.txt");
             result.Is(ans);
 
 
-            analysis.GetLines(File.ReadTextFile(@"gitdiff3.txt"));
+            analysis.GetLines(MyFile.ReadTextFile(@"gitdiff3.txt"));
             infoList = analysis.GetLineInfoList();
             list = analysis.GetChangedNumbersList(infoList);
             result = string.Join(",", list.ToArray());
             list.Count.Is(11);
-            ans = File.ReadTextFile(@"gitdiff3Array.txt");
+            ans = MyFile.ReadTextFile(@"gitdiff3Array.txt");
             result.Is(ans);
         }
     }
