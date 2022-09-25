@@ -24,15 +24,13 @@ namespace ReportExtractorTest
                     Item = dat[0],
                     Level = (LevelEnum)int.Parse(dat[1]),
                     IsWrite = bool.Parse(dat[2]),
-                    IsStrong = bool.Parse(dat[3])
+                    EmphasisLevel = int.Parse(dat[3])
                 });
             }
             CreateHTML cl = new CreateHTML(items);
 
-            cl.MakeBody();
-            cl.OutputText();
-
-            MyFile.WriteTexts(@"test.html", cl.OutputText());
+            MyFile.WriteTexts(@"test.html", cl.GetHtml());
+            MyFile.WriteTexts(@"test_s.html", cl.GetHtmlShort());
 
         }
     }

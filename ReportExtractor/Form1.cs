@@ -168,8 +168,8 @@ namespace ReportExtractor
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GetGitDiff diff = new GetGitDiff();
-            string inStr = diff.Run();
+            //    GetSource diff = new GetSource();
+            //    string inStr = diff.Run();
 
             //System.Text.Encoding enc1 = System.Text.Encoding.GetEncoding("Shift-JIS");
             //System.Text.Encoding enc2 = System.Text.Encoding.UTF8;
@@ -177,9 +177,9 @@ namespace ReportExtractor
             //byte[] temp = enc1.GetBytes(inStr);
             //string str1 = enc2.GetString(temp);
 
-            richTextBox1.Text = inStr;
-            
-            Console.WriteLine("");
+            //richTextBox1.Text = inStr;
+
+            //Console.WriteLine("");
         }
     }
 }

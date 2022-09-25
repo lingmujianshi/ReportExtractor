@@ -11,9 +11,12 @@ namespace ReportExtractorTest
         [TestMethod]
         public void TotalTest1()
         {
-            var gitdiff = MyFile.ReadTextFile(@"gitdiff1.txt");
-            List<string> report = MyFile.ReadTextLines(@"Report1.txt");
+            //var gitdiff = MyFile.ReadTextFile(@"gitdiff1.txt");
+            //List<string> report = MyFile.ReadTextLines(@"Report1.txt");
 
+            IGetSource source = new GetSourceDummy(".", @"gitdiff1.txt", @"Report1.txt");
+            var gitdiff = source.GetGitDiff();
+            List<string> report = source.GetReportData(); 
 
             AnalysisDiff analysis = new AnalysisDiff();
             List<DiffLineInfo> infoList = new List<DiffLineInfo>();
@@ -29,10 +32,8 @@ namespace ReportExtractorTest
 
             CreateHTML cl = new CreateHTML(contents.Items);
 
-            cl.MakeBody();
-            cl.OutputText();
-
-            MyFile.WriteTexts(@"TotalTest1.html", cl.OutputText());
+            MyFile.WriteTexts(@"TotalTest1.html", cl.GetHtml());
+            MyFile.WriteTexts(@"TotalTest1_s.html", cl.GetHtmlShort());
 
         }
 
@@ -57,10 +58,8 @@ namespace ReportExtractorTest
 
             CreateHTML cl = new CreateHTML(contents.Items);
 
-            cl.MakeBody();
-            cl.OutputText();
-
-            MyFile.WriteTexts(@"TotalTest2.html", cl.OutputText());
+            MyFile.WriteTexts(@"TotalTest2.html", cl.GetHtml());
+            MyFile.WriteTexts(@"TotalTest2_s.html", cl.GetHtmlShort());
 
         }
 
@@ -85,10 +84,8 @@ namespace ReportExtractorTest
 
             CreateHTML cl = new CreateHTML(contents.Items);
 
-            cl.MakeBody();
-            cl.OutputText();
-
-            MyFile.WriteTexts(@"TotalTest3.html", cl.OutputText());
+            MyFile.WriteTexts(@"TotalTest3.html", cl.GetHtml());
+            MyFile.WriteTexts(@"TotalTest3_s.html", cl.GetHtmlShort());
 
         }
     }

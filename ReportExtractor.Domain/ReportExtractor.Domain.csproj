@@ -46,12 +46,15 @@
     <Compile Include="ContentsEntity.cs" />
     <Compile Include="CreateHTML.cs" />
     <Compile Include="DiffLineInfo.cs" />
-    <Compile Include="GetGitDiff.cs" />
+    <Compile Include="GetSource.cs" />
+    <Compile Include="GetSourceDummy.cs" />
     <Compile Include="HtmlTag.cs" />
-    <Compile Include="IGitDiff.cs" />
+    <Compile Include="IGetSource.cs" />
+    <Compile Include="Info.cs" />
     <Compile Include="RegexOp.cs" />
     <Compile Include="OuterCommand.cs" />
     <Compile Include="OutlookMail.cs" />
+    <Compile Include="ReportDecorator.cs" />
     <Compile Include="StringLine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

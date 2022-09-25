@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportExtractor.Domain;
-using System;
 
 namespace ReportExtractorTest
 {
@@ -40,5 +39,34 @@ namespace ReportExtractorTest
             RegexOp.IsBlankRow("     ").Is(true);
             RegexOp.IsBlankRow(" a").Is(false);
         }
+
+        [TestMethod]
+        public void 先頭余計な文字を削除()
+        {
+            RegexOp.TrimTops("#文字列").Is("文字列");
+            RegexOp.TrimTops("# 文字列").Is("文字列");
+            RegexOp.TrimTops(" #文字列").Is("文字列");
+            RegexOp.TrimTops("##文字列").Is("文字列");
+            RegexOp.TrimTops("###文字列").Is("文字列");
+            RegexOp.TrimTops(" 文字列").Is("文字列");
+            RegexOp.TrimTops("!文字列").Is("文字列");
+            RegexOp.TrimTops(" #    文字列").Is("文字列");
+
+            RegexOp.TrimTops(" ! 文字列!").Is("文字列!");
+        }
+
+        [TestMethod]
+        public void 改行スペースなどを削除()
+        {
+            RegexOp.TrimAll("\t#文字列\r\n").Is("#文字列");
+            RegexOp.TrimAll("\t  文字列\r\n").Is("文字列");
+            RegexOp.TrimAll("\t 文字列\r\n").Is(" 文字列");
+            RegexOp.TrimAll(
+                @"<HTML lang=""ja"">
+<meta charset=""UTF-8"">
+").Is(@"<HTML lang=""ja""><meta charset=""UTF-8"">");
+
+        }
+
     }
 }

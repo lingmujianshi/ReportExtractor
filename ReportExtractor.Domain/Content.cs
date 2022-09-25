@@ -19,7 +19,7 @@ namespace ReportExtractor.Domain
         public LevelEnum Level { get; set; } = LevelEnum.None;
         public string Item { get; set; } = "";
         public bool IsWrite { get; set; } = false;
-        public bool IsStrong { get; set; } = false;
+        public int EmphasisLevel { get; set; }
     }
 
     public enum LevelEnum

@@ -60,6 +60,7 @@
     <Compile Include="CreateHTMLTest.cs" />
     <Compile Include="OutlookMailTest.cs" />
     <Compile Include="TotalTest.cs" />
+    <Compile Include="GetSourceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

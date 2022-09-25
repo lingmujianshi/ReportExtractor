@@ -16,12 +16,19 @@ namespace ReportExtractor.Domain
             if (mailItem != null)
             {
                 // To
+                if (To != "")
+                {
                 Recipient to = mailItem.Recipients.Add(To);
                 to.Type = (int)OlMailRecipientType.olTo;
+                }
 
                 // Cc
-                Recipient cc = mailItem.Recipients.Add(CC);
-                cc.Type = (int)OlMailRecipientType.olCC;
+                if (CC != "")
+                {
+                    Recipient cc = mailItem.Recipients.Add(CC);
+                    cc.Type = (int)OlMailRecipientType.olCC;
+                }
+                
                 // アドレス帳の表示名で表示できる
                 mailItem.Recipients.ResolveAll();
                 // 件名

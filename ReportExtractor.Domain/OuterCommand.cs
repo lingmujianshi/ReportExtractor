@@ -25,7 +25,7 @@ namespace ReportExtractor.Domain
         /// <param name="command">コマンド名</param>
         /// <param name="argument">引数</param>
         /// <returns></returns>
-        public String ExeCommand(string command, string argument)
+        public string ExeCommand(string command, string argument)
         {
             Process process = new Process();
 
@@ -63,7 +63,7 @@ namespace ReportExtractor.Domain
         /// <param name="command">コマンド名</param>
         /// <param name="argument">引数</param>
         /// <returns></returns>
-        public String ExeCommandSync(string command, string argument)
+        public string ExeCommandSync(string command, string argument)
         {
             Process process = new Process();
             _output = new StringBuilder();

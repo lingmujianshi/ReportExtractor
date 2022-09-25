@@ -61,6 +61,17 @@ namespace ReportExtractor.Domain
         public static string[] GetStringArray(string str)
         {
             return str.Split('\n');
-        } 
+        }
+
+        public static List<string> GetStringList(string str)
+        {
+            List<string> list = new List<string>();
+            var array = str.Replace("\r\n","\n").Split('\n');
+            foreach (var item in array)
+            {
+                list.Add(item);
+            }
+            return list;
+        }
     }
 }

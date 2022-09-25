@@ -1,9 +1,6 @@
 ﻿using ReportExtractor.Domain;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReportExtractorConsole
 {
@@ -12,19 +9,32 @@ namespace ReportExtractorConsole
         static void Main(string[] args)
         {
             
-            Console.WriteLine("出力");
+            //Console.WriteLine("出力");
 
-            //var outlook = new OutlookMail();
-            //outlook.CreateMail();
+            Info.ReadSetting();
 
-            Console.ReadKey();
+            var rd = new ReportDecorator();
+            rd.Execute();
+
+            var mail = new OutlookMail();
+            mail.Subject = "電気制御二課状況報告";
+            mail.Body = rd.ReportHtmlShort;
+            mail.To = @"";
+            mail.CC = @"";
+
+            mail.CreateMail();
+
+            //Console.ReadKey();
 
        }
 
         static void GetGitDiff()
         {
             //String str = ExeCommandSync("git", @"-C C:\\Users\tsuzuki\Documents\作業・他\浦安工場作業報告 diff");
-            //Console.WriteLine(str);
+            var cmd = new OuterCommand();
+            //String str = cmd.ExeCommand(@"C:\Program Files\Git\cmd\git.exe", @"--version");
+            String str = cmd.ExeCommand("git", @"--version");
+            Console.WriteLine(str);
         }
     }
 }
