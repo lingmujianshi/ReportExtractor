@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("ReportExtractorTest")]
 
 namespace ReportExtractor.Domain
 {
-    public class AnalysisDiff
+    internal sealed class AnalysisDiff
     {
         private string[] _lines;
 
@@ -52,7 +50,7 @@ namespace ReportExtractor.Domain
         /// git diff情報解析リストを作成
         /// </summary>
         /// <returns>gitdiff結果解析用構造体リスト</returns>
-        public List<DiffLineInfo> GetLineInfoList()
+        internal List<DiffLineInfo> GetLineInfoList()
         {
             List<DiffLineInfo> infoList = new List<DiffLineInfo>();
 

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("ReportExtractorTest")]
 
 namespace ReportExtractor.Domain
 {
-    public class ContentsEntity
+    internal sealed class ContentsEntity
     {
         List<Content> _items;
 

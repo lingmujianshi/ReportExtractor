@@ -15,7 +15,7 @@ namespace ReportExtractorTest
         }
 
         //[TestMethod]
-        public void gitdiffデータ()
+        public void GitDiffデータ()
         {
             IGetSource source = new GetSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
             Console.Write(source.GetGitDiff());

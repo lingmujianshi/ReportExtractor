@@ -1,10 +1,13 @@
-﻿namespace ReportExtractor.Domain
+﻿using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("ReportExtractorTest")]
+
+namespace ReportExtractor.Domain
 {
     /// <summary>
     /// gitdiff結果解析用構造体
     /// one-based
     /// </summary>
-    public struct DiffLineInfo
+    internal struct DiffLineInfo
     {
         public DiffLineInfo(int pos, int start, int end)
         {

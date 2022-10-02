@@ -5,12 +5,12 @@ using System.IO;
 namespace ReportExtractor.Domain
 {
     /// <summary>
-    /// ipconfigを実行して情報を受信するクラス
+    /// git diffを実行して情報を受信するクラス
     /// </summary>
-    public class GetSource : IGetSource
+    public sealed class GetSource : IGetSource
     {
         //public string _command = @"C:\Program Files\Git\cmd\git.exe";
-        public string _command = @"git";
+        string _command = @"git";
         public string GitDiffArg { get; }
         public string Folder { get; }
         public string Filename { get; }
@@ -26,7 +26,7 @@ namespace ReportExtractor.Domain
 
         string IGetSource.GetGitDiff()
         {
-            return oc.ExeCommand(_command, GitDiffArg);
+            return oc.ExeCommandSync(_command, GitDiffArg);
         }
 
         public List<string> GetReportData()

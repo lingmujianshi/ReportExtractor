@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReportExtractor.Domain;
 using System;
 using System.Collections.Generic;
+using ReportExtractor.Domain;
 
 namespace ReportExtractorTest
 {

@@ -14,7 +14,7 @@ namespace ReportExtractorTest
             //var gitdiff = MyFile.ReadTextFile(@"gitdiff1.txt");
             //List<string> report = MyFile.ReadTextLines(@"Report1.txt");
 
-            IGetSource source = new GetSourceDummy(".", @"gitdiff1.txt", @"Report1.txt");
+            IGetSource source = new GetSourceDummy("./TestData", @"gitdiff1.txt", @"Report1.txt");
             var gitdiff = source.GetGitDiff();
             List<string> report = source.GetReportData(); 
 

@@ -1,17 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("ReportExtractorTest")]
+
 namespace ReportExtractor.Domain
 {
     /// <summary>
     /// コンテンツリストからHTMLを作成するクラス
     /// </summary>
-    public class CreateHTML
+    internal sealed class CreateHTML
     {
         /// <summary>
         /// 元となるとなるContentリスト
         /// </summary>
-        List<Content> _items;
+        readonly List<Content> _items;
 
         /// <summary>
         /// HTML body部分を格納
@@ -46,12 +49,12 @@ namespace ReportExtractor.Domain
         /// <summary>
         /// 更新情報のみのHTMLを格納
         /// </summary>
-        string _htmlShort;
+        readonly string _htmlShort;
 
         /// <summary>
         /// 全体のHTMLを格納
         /// </summary>
-        string _html;
+        readonly string _html;
 
         /// <summary>
         /// コンストラクタ
@@ -338,7 +341,7 @@ namespace ReportExtractor.Domain
         /// <summary>
         /// HTMLヘッダ部分（固定）
         /// </summary>
-        StringBuilder _htmeHeader = new StringBuilder(@"<HTML lang=""ja"">
+        readonly StringBuilder _htmeHeader = new StringBuilder(@"<HTML lang=""ja"">
 <meta charset=""UTF-8"">
 <style>
     body{
@@ -390,7 +393,7 @@ namespace ReportExtractor.Domain
         /// <summary>
         /// HTMLフッタ部分（固定）
         /// </summary>
-        StringBuilder _htmlFooter = new StringBuilder(@"</BODY>
+        readonly StringBuilder _htmlFooter = new StringBuilder(@"</BODY>
 </HTML>
 ");
     }

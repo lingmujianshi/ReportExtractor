@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReportExtractor.Domain
 {
-    public class GetSourceDummy : IGetSource
+    public sealed class GetSourceDummy : IGetSource
     {
         string Folder { get; }
         string GitDiffFilename { get; }
