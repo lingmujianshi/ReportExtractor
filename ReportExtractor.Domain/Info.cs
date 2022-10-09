@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportExtractor.Domain
 {
@@ -16,16 +12,27 @@ namespace ReportExtractor.Domain
         public static string HtmlShortFilename { get; private set; } = @"Report_s.html";
         public static string htmlFilename { get; private set; } = @"Report.html";
 
+        /// <summary>
+        /// ファイルなど設定データの読み込み
+        /// </summary>
+        /// <exception cref="InputException"></exception>
         public static void ReadSetting()
         {
-            var Items = File.ReadAllLines(@"Info.txt");
-            IsDummy = bool.Parse(Items[0]);
-            GitFolder = Items[1];
-            GitDiffFilename = Items[2];
-            ReportFilename = Items[3];
-            HtmlShortFilename = Items[4];
-            htmlFilename = Items[5];
-
+            try
+            {
+                var Items = File.ReadAllLines(@"Info.txt");
+                IsDummy = bool.Parse(Items[0]);
+                GitFolder = Items[1];
+                GitDiffFilename = Items[2];
+                ReportFilename = Items[3];
+                HtmlShortFilename = Items[4];
+                htmlFilename = Items[5];
+            }
+            catch (Exception ex)
+            {
+                throw new InputException(ex.Message);
+            }
+            
         }
     }
 }

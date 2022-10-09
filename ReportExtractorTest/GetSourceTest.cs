@@ -10,14 +10,14 @@ namespace ReportExtractorTest
         [TestMethod]
         public void レポートデータ()
         {
-            IGetSource source = new GetSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
+            IGetSource source = new ReportSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
             Console.Write(source.GetReportData());
         }
 
         //[TestMethod]
         public void GitDiffデータ()
         {
-            IGetSource source = new GetSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
+            IGetSource source = new ReportSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
             Console.Write(source.GetGitDiff());
         }
     }

@@ -7,7 +7,7 @@ namespace ReportExtractor.Domain
     /// <summary>
     /// git diffを実行して情報を受信するクラス
     /// </summary>
-    public sealed class GetSource : IGetSource
+    public sealed class ReportSource : IGetSource
     {
         //public string _command = @"C:\Program Files\Git\cmd\git.exe";
         string _command = @"git";
@@ -16,7 +16,7 @@ namespace ReportExtractor.Domain
         public string Filename { get; }
         OuterCommand oc;
 
-        public GetSource(string folder, string filename)
+        public ReportSource(string folder, string filename)
         {
             Folder = folder;
             Filename = filename;
@@ -24,6 +24,10 @@ namespace ReportExtractor.Domain
             oc = new OuterCommand();
         }
 
+        /// <summary>
+        /// 報告書に対するGit Diff 差分テキストデータを取得
+        /// </summary>
+        /// <returns>Git Diff 差分テキストデータ</returns>
         string IGetSource.GetGitDiff()
         {
             return oc.ExeCommandSync(_command, GitDiffArg);
@@ -44,8 +48,7 @@ namespace ReportExtractor.Domain
             }
             catch (Exception ex)
             {
-
-                Console.WriteLine(ex.Message);
+                throw new InputException(ex.Message);
             }
             return text;
         }

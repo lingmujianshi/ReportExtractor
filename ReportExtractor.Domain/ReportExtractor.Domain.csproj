@@ -46,8 +46,10 @@
     <Compile Include="ContentsEntity.cs" />
     <Compile Include="CreateHTML.cs" />
     <Compile Include="DiffLineInfo.cs" />
-    <Compile Include="GetSource.cs" />
-    <Compile Include="GetSourceDummy.cs" />
+    <Compile Include="InputException.cs" />
+    <Compile Include="ReportSource.cs" />
+    <Compile Include="ReportSourceDummy.cs" />
+    <Compile Include="GetSourceFactory.cs" />
     <Compile Include="HtmlTag.cs" />
     <Compile Include="IGetSource.cs" />
     <Compile Include="Info.cs" />

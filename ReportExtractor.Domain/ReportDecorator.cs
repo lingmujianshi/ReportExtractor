@@ -11,14 +11,8 @@ namespace ReportExtractor.Domain
         
         public ReportDecorator()
         {
-            if (Info.IsDummy)
-            {
-                _source = new GetSourceDummy(Info.GitFolder, Info.GitDiffFilename, Info.ReportFilename);
-            }
-            else
-            {
-                _source = new GetSource(Info.GitFolder, Info.ReportFilename);
-            }
+            _source = GetSourceFactory.Create(Info.IsDummy);
+
         }
 
         public void Execute()
