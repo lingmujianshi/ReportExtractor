@@ -34,6 +34,7 @@ namespace ReportExtractorTest
 
             MyFile.WriteTexts(@"TotalTest1.html", cl.GetHtml());
             MyFile.WriteTexts(@"TotalTest1_s.html", cl.GetHtmlShort());
+            MyFile.WriteTexts(@"TotalTest1Mail.html", cl.GetHtmlForMail());
 
         }
 
@@ -60,6 +61,7 @@ namespace ReportExtractorTest
 
             MyFile.WriteTexts(@"TotalTest2.html", cl.GetHtml());
             MyFile.WriteTexts(@"TotalTest2_s.html", cl.GetHtmlShort());
+            MyFile.WriteTexts(@"TotalTest2Mail.html", cl.GetHtmlForMail());
 
         }
 
@@ -86,6 +88,7 @@ namespace ReportExtractorTest
 
             MyFile.WriteTexts(@"TotalTest3.html", cl.GetHtml());
             MyFile.WriteTexts(@"TotalTest3_s.html", cl.GetHtmlShort());
+            MyFile.WriteTexts(@"TotalTest3Mail.html", cl.GetHtmlForMail());
 
         }
     }

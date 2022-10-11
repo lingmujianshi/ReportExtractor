@@ -11,119 +11,126 @@ namespace ReportExtractor.Domain
     /// </summary>
     internal sealed class CreateHTML
     {
-        /// <summary>
-        /// 元となるとなるContentリスト
-        /// </summary>
-        readonly List<Content> _items;
-
-        /// <summary>
-        /// HTML body部分を格納
-        /// </summary>
-        StringBuilder _body;
-
-        /// <summary>
-        /// Sectionエリアの文字を一時格納
-        /// </summary>
+        // Sectionエリアの文字を一時格納
         string _section;
 
-        /// <summary>
-        /// Pエリアの文字を一時格納
-        /// </summary>
+        // Pエリアの文字を一時格納
         string _paragraph;
 
-        /// <summary>
-        /// セクション内であるかどうか
-        /// </summary>
+        // セクション内であるかどうか
         bool _isSectionStart;
 
-        /// <summary>
-        /// Pタグプロセス中か
-        /// </summary>
+        // Pタグプロセス中か
         bool _isPStart;
 
-        /// <summary>
-        /// 連続空白行カウンタ
-        /// </summary>
+        // 連続空白行カウンタ
         int _blankLineCount;
 
         /// <summary>
-        /// 更新情報のみのHTMLを格納
+        /// コンテンツリスト
         /// </summary>
-        readonly string _htmlShort;
+        List<Content> _items;
 
         /// <summary>
-        /// 全体のHTMLを格納
+        /// タイトル（itemsの1行目をタイトルとする）
         /// </summary>
-        readonly string _html;
+        public string Title { get; private set; } = "HTMLタイトル";
 
         /// <summary>
-        /// コンストラクタ
+        /// コントラクタ
         /// </summary>
         /// <param name="items">コンテンツリスト</param>
         public CreateHTML(List<Content> items)
         {
             _items = items;
-            TrimTopSignes();
-            
-            //更新情報のみのHTMLを作成して格納
-            MakeBody(true);
-            _htmlShort = CombineHtml();
-            _htmlShort=RegexOp.TrimAll(_htmlShort);
-
-            //全体のHTMLを作成して格納
-            MakeBody(false);
-            _html = CombineHtml();
         }
 
         /// <summary>
-        /// 更新情報のみのHTMLを取得
+        /// 変更箇所だけのHTMLを取得
         /// </summary>
-        /// <returns>HTMLテキスト</returns>
+        /// <returns>変更箇所だけのHTML</returns>
         public string GetHtmlShort()
         {
-            return _htmlShort;
+            TrimTopSignes(ref _items);
+
+
+            //更新情報のみのHTMLを作成して格納
+            StringBuilder shortBody = MakeBody(_items, true);
+            string html = CombineHtml(shortBody);
+            //html=RegexOp.TrimAll(_htmlShort);
+
+            return html;
         }
 
         /// <summary>
-        /// 全体のHTMLを取得
+        /// 報告書全体のHTMLを取得
         /// </summary>
-        /// <returns>HTMLテキスト</returns>
+        /// <returns>報告書全体のHTML</returns>
         public string GetHtml()
         {
-            return _html;
+            TrimTopSignes(ref _items);
+            StringBuilder fullBody = MakeBody(_items, false);
+            string html = CombineHtml(fullBody);
+            return html;
+        }
+
+        /// <summary>
+        /// メール用に編集されたHTMLを取得
+        /// （変更箇所＋全体）
+        /// </summary>
+        /// <returns>メール用に編集されたHTML</returns>
+        public string GetHtmlForMail()
+        {
+            TrimTopSignes(ref _items);
+            //更新情報のみのHTMLを作成して格納
+            StringBuilder shortBody = MakeBody(_items, true);
+            
+            //全体のHTMLを作成して格納
+            StringBuilder fullBody = MakeBody(_items, false);
+            
+            StringBuilder mailBody = new StringBuilder();
+            mailBody.Append(shortBody).Append(_htmlMiddle).Append(fullBody);
+            string htmlForMail = CombineHtml(mailBody);
+            
+            return htmlForMail;
         }
 
         /// <summary>
         /// 先頭の`#,!,Space,Tabなど余計な文字を削除
         /// </summary>
-        private void TrimTopSignes()
+        private void TrimTopSignes(ref List<Content> items)
         {
-            foreach (Content i in _items)
+            foreach (Content i in items)
             {
                 i.Item = RegexOp.TrimTops(i.Item);
             }
+        }
+
+        string GetHtmlTitle()
+        {
+            return "<title>" + Title + "</title>";
         }
 
         /// <summary>
         /// 作成したHTLMとヘッダ・フッタを結合
         /// </summary>
         /// <returns>HTMLテキスト</returns>
-        private string CombineHtml()
+        private string CombineHtml(StringBuilder _body)
         {
             StringBuilder sb = new StringBuilder();
-            return sb.Append(_htmeHeader).Append(_body).Append(_htmlFooter).ToString();
+            return sb.Append(_htmeHeaderStart).Append(GetHtmlTitle()).Append(_htmeCSS).Append(_htmeHeaderEnd).Append(_body).Append(_htmlFooter).ToString();
         }
 
         /// <summary>
         /// HTML Body部分を作成
         /// </summary>
         /// <param name="updatedOnly">更新分のみ表示</param>
-        private void MakeBody(bool updatedOnly)
+        private StringBuilder MakeBody(List<Content> items,bool updatedOnly)
         {
-            _body = new StringBuilder();
+            StringBuilder body = new StringBuilder();
             StartSectionProcess();
 
-            foreach (Content item in _items)
+            foreach (Content item in items)
             {
                 if (updatedOnly)
                 {
@@ -158,7 +165,7 @@ namespace ReportExtractor.Domain
                         if (_section != "")
                         {
                             //ヘッダ１ごとにsectionを区切る
-                            EndSectionProcess();
+                            EndSectionProcess(ref body);
                             StartSectionProcess();
                         }
 
@@ -205,7 +212,9 @@ namespace ReportExtractor.Domain
 
             //一通り読み終わった後のタグ付加
             EndParagraphProcess();
-            EndSectionProcess();
+            EndSectionProcess(ref body);
+
+            return body;
         }
 
         /// <summary>
@@ -215,7 +224,7 @@ namespace ReportExtractor.Domain
         /// <returns>処理後の文字列</returns>
         private string AddBr(string line, bool isBlank)
         {
-            string res = "";
+            string res;
             if (isBlank)
             {
                 //空白行が2行以上が続いたらBrタグは追加しない。
@@ -248,7 +257,7 @@ namespace ReportExtractor.Domain
         /// <returns></returns>
         private string EmphasisProcess(Content c)
         {
-            string line = "";
+            string line;
             if (c.EmphasisLevel == 1)
             {
                 // emタグ付加
@@ -282,13 +291,13 @@ namespace ReportExtractor.Domain
         /// <summary>
         /// セクション終了時の処理
         /// </summary>
-        private void EndSectionProcess()
+        private void EndSectionProcess(ref StringBuilder body)
         {
             if (_isSectionStart)
             {
                 _section = _tagSection.AddTagsNewLine(_section);
                 _isSectionStart = false;
-                _body.Append(_section);
+                body.Append(_section);
             }
         }
 
@@ -330,71 +339,78 @@ namespace ReportExtractor.Domain
 
         // タグ
 
-        HtmlTag _tagH1 = new HtmlTag("h1");
-        HtmlTag _tagH2 = new HtmlTag("h2");
-        HtmlTag _tagH3 = new HtmlTag("h3");
-        HtmlTag _tagSection = new HtmlTag("section");
-        HtmlTag _tagP = new HtmlTag("p");
-        HtmlTag _tagEm = new HtmlTag("em");
-        HtmlTag _tagStrong = new HtmlTag("strong");
+        readonly HtmlTag _tagH1 = new HtmlTag("h1");
+        readonly HtmlTag _tagH2 = new HtmlTag("h2");
+        readonly HtmlTag _tagH3 = new HtmlTag("h3");
+        readonly HtmlTag _tagSection = new HtmlTag("section");
+        readonly HtmlTag _tagP = new HtmlTag("p");
+        readonly HtmlTag _tagEm = new HtmlTag("em");
+        readonly HtmlTag _tagStrong = new HtmlTag("strong");
 
         /// <summary>
         /// HTMLヘッダ部分（固定）
         /// </summary>
-        readonly StringBuilder _htmeHeader = new StringBuilder(@"<HTML lang=""ja"">
-<meta charset=""UTF-8"">
-<style>
+        readonly string _htmeHeaderStart = @"<HTML lang=""ja"">
+<meta charset=""UTF-8"">";
+
+readonly string _htmeHeaderEnd = @"<BODY>
+";
+
+        readonly string _htmeCSS = @"<style>
     body{
         width: 40em;
         margin-left: 5px;
     }
     h1 {
         font-size: 20px;
-        font-family: monospace;
         font-weight: bold;
-        background-color: rgba(0, 0, 0, 0.05);
         padding: 10px 20px;
-        border-radius: 5px;
  
     }
     h2 {
         font-size: 14px;
-        font-family: monospace;
-        border-left: solid 5px #999999;
-        border-bottom: solid 1px #999999;
         padding-left: 5px;
         
     }
 
     h3 {
-        font-family: monospace;
         font-size: 12px;
     }
 
     p{
-        font-size: 12px;
+        font-size: 10.5px;
         margin-left: 1em;
     }
 
     em {
-        font-style: normal;
         color: blue;
     }
 
     strong {
-        font-style: normal;
         color: red;
     }
 </style>
-
-<BODY>
-");
+";
 
         /// <summary>
         /// HTMLフッタ部分（固定）
         /// </summary>
-        readonly StringBuilder _htmlFooter = new StringBuilder(@"</BODY>
+        readonly string _htmlFooter = @"</BODY>
 </HTML>
-");
+";
+
+        /// <summary>
+        /// HTMLつなぎの部分
+        /// </summary>
+        readonly string _htmlMiddle = @"<section>
+<p>
+<hr>
+機種ごとの詳細については以下の通りです。
+</p>
+</section>
+";
+
     }
+
+
 }

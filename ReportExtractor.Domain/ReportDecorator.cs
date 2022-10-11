@@ -7,12 +7,21 @@ namespace ReportExtractor.Domain
     {
         public string ReportHtml { get; private set; }
         public string ReportHtmlShort { get; private set; }
-        IGetSource _source;
+        public string ReportHtmlForMail { get; private set; }
+        public string ReportTitle { get; private set; }
+
+        readonly IGetSource _source;
         
         public ReportDecorator()
         {
-            _source = GetSourceFactory.Create(Info.IsDummy);
-
+            if (Info.IsDummy)
+            {
+                _source = new ReportSourceDummy(Info.GitFolder, Info.GitDiffFilename, Info.ReportFilename);
+            }
+            else
+            {
+                _source = new ReportSource(Info.GitFolder, Info.ReportFilename);
+            }
         }
 
         public void Execute()
@@ -21,12 +30,10 @@ namespace ReportExtractor.Domain
             List<string> report = _source.GetReportData();
 
             AnalysisDiff analysis = new AnalysisDiff();
-            List<DiffLineInfo> infoList = new List<DiffLineInfo>();
             analysis.GetLines(gitdiff);
-            infoList = analysis.GetLineInfoList();
+            List<DiffLineInfo> infoList = analysis.GetLineInfoList();
 
-            List<int> list = new List<int>();
-            list = analysis.GetChangedNumbersList(infoList);
+            List<int> list = analysis.GetChangedNumbersList(infoList);
 
             ContentsEntity contents = new ContentsEntity(report);
             contents.SetStrong(list);
@@ -36,9 +43,12 @@ namespace ReportExtractor.Domain
             
             ReportHtml = cl.GetHtml();
             ReportHtmlShort = cl.GetHtmlShort();
+            ReportHtmlForMail = cl.GetHtmlForMail();
+            ReportTitle = cl.Title;
 
             File.WriteAllText(Info.htmlFilename, ReportHtml);
             File.WriteAllText(Info.HtmlShortFilename, ReportHtmlShort);
+            File.WriteAllText(Info.htmlMailFilename, ReportHtmlForMail);
         }
     }
 }

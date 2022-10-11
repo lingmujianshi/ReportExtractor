@@ -24,8 +24,8 @@ namespace ReportExtractor
             _rd.Execute();
 
             var mail = new OutlookMail();
-            mail.Subject = "電気制御二課状況報告";
-            mail.Body = _rd.ReportHtmlShort;
+            mail.Subject = _rd.ReportTitle;
+            mail.Body = _rd.ReportHtmlForMail;
             mail.To = @"";
             mail.CC = @"";
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 
 namespace ReportExtractorTest
@@ -31,6 +32,7 @@ namespace ReportExtractorTest
 
             MyFile.WriteTexts(@"test.html", cl.GetHtml());
             MyFile.WriteTexts(@"test_s.html", cl.GetHtmlShort());
+            MyFile.WriteTexts(@"testMail.html", cl.GetHtmlForMail());
 
         }
     }

@@ -7,7 +7,7 @@ namespace ReportExtractorTest
     [TestClass]
     public class GetSourceTest
     {
-        [TestMethod]
+        //[TestMethod]
         public void レポートデータ()
         {
             IGetSource source = new ReportSource(@"D:\VS\AutoReport\ReportExtractor", @"ReportExtractor.sln");
