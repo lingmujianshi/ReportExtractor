@@ -55,7 +55,7 @@ namespace ReportExtractor.Domain
 
 
             //更新情報のみのHTMLを作成して格納
-            StringBuilder shortBody = MakeBody(_items, true);
+            StringBuilder shortBody = GetBody(_items, GetBodyMethod.ShortForHtml);
             string html = CombineHtml(shortBody);
             //html=RegexOp.TrimAll(_htmlShort);
 
@@ -69,7 +69,7 @@ namespace ReportExtractor.Domain
         public string GetHtml()
         {
             TrimTopSignes(ref _items);
-            StringBuilder fullBody = MakeBody(_items, false);
+            StringBuilder fullBody = GetBody(_items, GetBodyMethod.FullForHtml);
             string html = CombineHtml(fullBody);
             return html;
         }
@@ -82,17 +82,28 @@ namespace ReportExtractor.Domain
         public string GetHtmlForMail()
         {
             TrimTopSignes(ref _items);
+
+            //最初の部分のHTMLを作成して格納
+            StringBuilder introduceForMail
+                = GetBody(_items, GetBodyMethod.IntroduceForMail);
+
             //更新情報のみのHTMLを作成して格納
-            StringBuilder shortBody = MakeBody(_items, true);
-            
+            StringBuilder shortForMail
+                = GetBody(_items, GetBodyMethod.ShortContentForMail);
+
             //全体のHTMLを作成して格納
-            StringBuilder fullBody = MakeBody(_items, false);
-            
-            StringBuilder mailBody = new StringBuilder();
-            mailBody.Append(shortBody).Append(_htmlMiddle).Append(fullBody);
-            string htmlForMail = CombineHtml(mailBody);
-            
-            return htmlForMail;
+            StringBuilder fullForMail
+                = GetBody(_items, GetBodyMethod.FullContentForMail);
+
+            //結合してメール用に
+            StringBuilder mailBody
+                = new StringBuilder()
+                .Append(introduceForMail)
+                .Append(shortForMail)
+                .Append(_htmlMiddle)
+                .Append(fullForMail);
+
+            return CombineHtml(mailBody);
         }
 
         /// <summary>
@@ -117,26 +128,94 @@ namespace ReportExtractor.Domain
         /// <returns>HTMLテキスト</returns>
         private string CombineHtml(StringBuilder _body)
         {
-            StringBuilder sb = new StringBuilder();
-            return sb.Append(_htmeHeaderStart).Append(GetHtmlTitle()).Append(_htmeCSS).Append(_htmeHeaderEnd).Append(_body).Append(_htmlFooter).ToString();
+            StringBuilder sb = new StringBuilder()
+                .Append(_htmeHeaderStart)
+                .Append(GetHtmlTitle())
+                .Append(_htmeCSS)
+                .Append(_htmeHeaderEnd)
+                .Append(_body)
+                .Append(_htmlFooter);
+
+            return sb.ToString();
         }
+
+        /// <summary>
+        /// Body取得のメソッド切り替え
+        /// </summary>
+        private enum GetBodyMethod
+        {
+            ShortForHtml,           //HTML用更新部分のみ
+            FullForHtml,            //HTML用全部
+            IntroduceForMail,       //メール用導入部分
+            ShortContentForMail,    //メール用導入部分より後の更新部分のみ
+            FullContentForMail      //メール用導入部分より後より全部
+        };
 
         /// <summary>
         /// HTML Body部分を作成
         /// </summary>
         /// <param name="updatedOnly">更新分のみ表示</param>
-        private StringBuilder MakeBody(List<Content> items,bool updatedOnly)
+        private StringBuilder GetBody(List<Content> items, GetBodyMethod method)
         {
+            Title = items[0].Item; // 1行目はタイトルとする。
+
+            // 更新部分だけBodyに付加
+            bool isUpdatedOnly = false;
+            if (method == GetBodyMethod.ShortContentForMail || //メール用の更新部分
+                method == GetBodyMethod.ShortForHtml)          //HTML用更新部分のみ
+            {
+                isUpdatedOnly = true;
+            }
+
+            // 最初のH1ヘッダを見つけたことを記憶する変数
+            bool isFoundFirstH1 = false;
+
+            //bodyを格納
             StringBuilder body = new StringBuilder();
+
+            //<section>開始トリガ
             StartSectionProcess();
 
             foreach (Content item in items)
             {
-                if (updatedOnly)
+
+                // 最初のH1ヘッダを見つけたことを記憶
+                if (item.Level == LevelEnum.Header1)
                 {
-                    // 記載しない行の場合は次の行へ
-                    if (!item.IsWrite) continue;
+                    isFoundFirstH1 = true;
                 }
+
+                // 更新部分だけBodyに付加するメソッド
+                if (isUpdatedOnly)
+                {
+                    // 記載しない行の場合は付加せずに次の行へ
+                    if (!item.IsWrite)
+                    {
+                        continue;
+                    }
+                }
+
+                //メールの導入部分の時
+                if (method == GetBodyMethod.IntroduceForMail)
+                {
+                    if (isFoundFirstH1 ||   //H1ヘッダを見つけた後はBodyに付加しない。
+                        items[0] == item)   //メールの場合は文面にタイトルを入れない。
+                    {
+                        continue;
+                    }
+                }
+
+                //メールの導入部分以降を書き出すメソッド
+                if (method == GetBodyMethod.ShortContentForMail ||    //メール用導入部分より後の更新部分のみ
+                    method == GetBodyMethod.FullContentForMail)      //メール用導入部分より後より全部
+                {
+                    //H1ヘッダを見つけるまでは飛ばす
+                    if (!isFoundFirstH1)
+                    {
+                        continue;
+                    }
+                }
+
 
                 // 空白行判定用
                 var isBlank = RegexOp.IsBlankRow(item.Item);
@@ -241,10 +320,10 @@ namespace ReportExtractor.Domain
             }
             //else
             //{
-                //brタグ追加
-                res = line + HtmlTag.Br;
-                //HTMLをテキストで見やすくするため改行
-                AddNewLine(ref res);
+            //brタグ追加
+            res = line + HtmlTag.Br;
+            //HTMLをテキストで見やすくするため改行
+            AddNewLine(ref res);
             //}
             return res;
 
@@ -353,7 +432,7 @@ namespace ReportExtractor.Domain
         readonly string _htmeHeaderStart = @"<HTML lang=""ja"">
 <meta charset=""UTF-8"">";
 
-readonly string _htmeHeaderEnd = @"<BODY>
+        readonly string _htmeHeaderEnd = @"<BODY>
 ";
 
         readonly string _htmeCSS = @"<style>
@@ -412,6 +491,7 @@ readonly string _htmeHeaderEnd = @"<BODY>
         /// </summary>
         readonly string _htmlMiddle = @"<section>
 <p>
+<br>
 <hr>
 機種ごとの詳細については以下の通りです。
 </p>
