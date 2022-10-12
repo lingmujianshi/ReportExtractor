@@ -32,6 +32,9 @@ namespace ReportExtractor
             try
             {
                 _vm.MakeHtml();
+                CreateMailButton.Visible = true;
+                DisplayMail_sButton.Visible = true;
+                DisplayMailButton.Visible = true;
 
             }
             catch (Exception ex)
@@ -52,7 +55,29 @@ namespace ReportExtractor
         private void OpenFolderButton_Click(object sender, EventArgs e)
         {
             //フォルダ"C:\My Documents\My Pictures"を開く
-            System.Diagnostics.Process.Start(Info.GitFolder);
+            //System.Diagnostics.Process.Start(Info.GitFolder);
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = @"Report.html";
+            proc.Start();
+        }
+
+        private void CreateMailButton_Click(object sender, EventArgs e)
+        {
+            _vm.CreateMail();
+        }
+
+        private void DisplayMail_sButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = @"Report_s.html";
+            proc.Start();
+        }
+
+        private void DisplayMailButton_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = @"Report.html";
+            proc.Start();
         }
     }
 }

@@ -8,8 +8,6 @@ namespace ReportExtractorConsole
     {
         static void Main(string[] args)
         {
-            
-            //Console.WriteLine("出力");
 
             Info.ReadSetting();
 
@@ -24,9 +22,7 @@ namespace ReportExtractorConsole
 
             mail.CreateMail();
 
-            //Console.ReadKey();
-
-       }
+        }
 
         static void GetGitDiff()
         {
@@ -35,6 +31,17 @@ namespace ReportExtractorConsole
             //String str = cmd.ExeCommand(@"C:\Program Files\Git\cmd\git.exe", @"--version");
             String str = cmd.ExeCommand("git", @"--version");
             Console.WriteLine(str);
+        }
+
+        static void MailDemo()
+        {
+            var mail = new OutlookMail();
+            mail.Subject = @"メールのタイトル";
+            mail.Body = @"<body>ここに<em>文面</em>を書きます。</body>";
+            mail.To = @"aaa@xxx.com";
+            mail.CC = @"bbb@yyy.com";
+
+            mail.CreateMail();
         }
     }
 }

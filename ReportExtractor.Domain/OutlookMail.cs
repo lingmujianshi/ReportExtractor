@@ -1,4 +1,5 @@
 ﻿using Microsoft.Office.Interop.Outlook;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ReportExtractor.Domain
 {
@@ -18,8 +19,8 @@ namespace ReportExtractor.Domain
                 // To
                 if (To != "")
                 {
-                Recipient to = mailItem.Recipients.Add(To);
-                to.Type = (int)OlMailRecipientType.olTo;
+                    Recipient to = mailItem.Recipients.Add(To);
+                    to.Type = (int)OlMailRecipientType.olTo;
                 }
 
                 // Cc
@@ -28,7 +29,7 @@ namespace ReportExtractor.Domain
                     Recipient cc = mailItem.Recipients.Add(CC);
                     cc.Type = (int)OlMailRecipientType.olCC;
                 }
-                
+
                 // アドレス帳の表示名で表示できる
                 mailItem.Recipients.ResolveAll();
                 // 件名
@@ -36,7 +37,8 @@ namespace ReportExtractor.Domain
                 // 本文
                 mailItem.HTMLBody = Body;
                 // 表示(Displayメソッド引数のtrue/falseでモーダル/モードレスウィンドウを指定して表示できる)
-                mailItem.Display(true);
+                mailItem.Display(false);
+
             }
         }
     }

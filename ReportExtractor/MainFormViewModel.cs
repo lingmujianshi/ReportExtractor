@@ -21,6 +21,23 @@ namespace ReportExtractor
         {
             Info.ReadSetting();
 
+            _rd = new ReportDecorator();
+            _rd.Execute();
+
+            //var mail = new OutlookMail();
+            //mail.Subject = rd.ReportTitle;
+            //mail.Body = rd.ReportHtmlForMail;
+            //mail.To = @"";
+            //mail.CC = @"";
+
+            //mail.CreateMail();
+        }
+
+        internal void CreateMail()
+        {
+            Info.ReadSetting();
+
+            _rd = new ReportDecorator();
             _rd.Execute();
 
             var mail = new OutlookMail();
