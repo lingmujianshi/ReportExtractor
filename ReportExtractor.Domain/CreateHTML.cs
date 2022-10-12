@@ -370,7 +370,9 @@ readonly string _htmeHeaderEnd = @"<BODY>
     h2 {
         font-size: 14px;
         padding-left: 5px;
-        
+        padding-bottom: 0px;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 
     h3 {
@@ -378,15 +380,21 @@ readonly string _htmeHeaderEnd = @"<BODY>
     }
 
     p{
-        font-size: 10.5px;
+        padding-top:0px;
+        font-style: normal;
+        font-size: 12px;
         margin-left: 1em;
+        margin-top: 0px;
+        margin-bottom: 0px;
     }
 
     em {
+        font-style: normal;
         color: blue;
     }
 
     strong {
+        font-style: normal;
         color: red;
     }
 </style>
