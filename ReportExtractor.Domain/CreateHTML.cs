@@ -455,6 +455,7 @@ namespace ReportExtractor.Domain
     }
 
     h3 {
+        font-weight: bold;
         font-size: 12px;
     }
 
