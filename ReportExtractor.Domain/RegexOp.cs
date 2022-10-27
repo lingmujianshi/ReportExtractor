@@ -36,7 +36,7 @@ namespace ReportExtractor.Domain
         /// <returns>判定</returns>
         public static bool IsHeader3(string str)
         {
-            string pattern = @"^###[^#]";
+            string pattern = @"^(\s*|\t*)###[^#]";
             return Regex.IsMatch(str, pattern);
         }
 
@@ -68,6 +68,24 @@ namespace ReportExtractor.Domain
             string pattern = @"([\t\n\r]|\s{2,})";
             var res = Regex.Replace(str, pattern, "");
             return res;
+        }
+
+        public static bool IsPulse(string str)
+        {
+            string pattern = @"^(\s*|\t*)\+";
+            return Regex.IsMatch(str, pattern);
+        }
+
+        public static bool IsMinus(string str)
+        {
+            string pattern = @"^(\s*|\t*)-";
+            return Regex.IsMatch(str, pattern);
+        }
+
+        public static bool IsExclamation(string str)
+        {
+            string pattern = @"^(\s*|\t*)\!";
+            return Regex.IsMatch(str, pattern);
         }
     } 
 }

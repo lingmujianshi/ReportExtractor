@@ -68,5 +68,31 @@ namespace ReportExtractorTest
 
         }
 
+        [TestMethod]
+        public void プラスマーク()
+        {
+            RegexOp.IsPulse("+abc").Is(true);
+            RegexOp.IsPulse(" +abc").Is(true);
+            RegexOp.IsPulse("   +abc").Is(true);
+            RegexOp.IsPulse("abc").Is(false);
+        }
+
+        [TestMethod]
+        public void マイナスマーク()
+        {
+            RegexOp.IsMinus("-abc").Is(true);
+            RegexOp.IsMinus(" -abc").Is(true);
+            RegexOp.IsMinus("   -abc").Is(true);
+            RegexOp.IsMinus("abc").Is(false);
+        }
+
+        [TestMethod]
+        public void ビックリマーク()
+        {
+            RegexOp.IsExclamation("!abc").Is(true);
+            RegexOp.IsExclamation(" !abc").Is(true);
+            RegexOp.IsExclamation("   !abc").Is(true);
+            RegexOp.IsExclamation("abc").Is(false);
+        }
     }
 }

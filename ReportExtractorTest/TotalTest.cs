@@ -27,6 +27,7 @@ namespace ReportExtractorTest
             list = analysis.GetChangedNumbersList(infoList);
 
             ContentsEntity contents = new ContentsEntity(report);
+            contents.ManualEmphasisSet();
             contents.SetStrong(list);
             contents.SetWrite();
 
@@ -54,6 +55,7 @@ namespace ReportExtractorTest
             list = analysis.GetChangedNumbersList(infoList);
 
             ContentsEntity contents = new ContentsEntity(report);
+            contents.ManualEmphasisSet();
             contents.SetStrong(list);
             contents.SetWrite();
 
@@ -81,6 +83,7 @@ namespace ReportExtractorTest
             list = analysis.GetChangedNumbersList(infoList);
 
             ContentsEntity contents = new ContentsEntity(report);
+            contents.ManualEmphasisSet();
             contents.SetStrong(list);
             contents.SetWrite();
 

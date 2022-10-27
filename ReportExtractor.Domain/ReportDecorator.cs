@@ -37,6 +37,7 @@ namespace ReportExtractor.Domain
 
             ContentsEntity contents = new ContentsEntity(report);
             contents.SetStrong(list);
+            contents.ManualEmphasisSet();
             contents.SetWrite();
 
             CreateHTML cl = new CreateHTML(contents.Items);

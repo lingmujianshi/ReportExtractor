@@ -45,9 +45,9 @@ namespace ReportExtractor.Domain
         /// </summary>
         /// <param name="str">判定するテキスト</param>
         /// <returns>レベルEnum</returns>
-        private LevelEnum GetLevel(string str)
+        internal LevelEnum GetLevel(string str)
         {
-            if(RegexOp.IsHeader1(str))
+            if (RegexOp.IsHeader1(str))
             {
                 return LevelEnum.Header1;
             }
@@ -82,12 +82,12 @@ namespace ReportExtractor.Domain
                 }
             }
         }
-        
+
 
         List<int> _PList; //Pタグの行番号を記憶するためのリスト
         bool _isPStart = false;  //Pタグ開始記憶
         bool _isPSectionWrite = false;  //Pタグ開始後にIsWriteがあったかを記憶
-        
+
         int _h1 = 0;  //H1タグの行番号を記憶
         int _h2 = 0;  //H2タグの行番号を記憶
         int _h3 = 0;  //H3タグの行番号を記憶
@@ -112,7 +112,7 @@ namespace ReportExtractor.Domain
                     // 空行はIsWriteとする。（HTML見た目のため）
                     _items[i].IsWrite = true;
                 }
-                
+
                 // H1タグの場合
                 if (_items[i].Level == LevelEnum.Header1)
                 {
@@ -152,7 +152,7 @@ namespace ReportExtractor.Domain
                 }
 
                 //行がIsStrongの場合
-                if (_items[i].EmphasisLevel>0)
+                if (_items[i].EmphasisLevel > 0)
                 {
                     //Pタグ内のみ
                     if (_isPStart)
@@ -161,7 +161,7 @@ namespace ReportExtractor.Domain
                     }
                 }
 
-                
+
             }
         }
 
@@ -193,10 +193,38 @@ namespace ReportExtractor.Domain
                     {
                         _items[i].IsWrite = true;
                     }
-                    
+
                 }
                 _isPStart = false;
                 _isPSectionWrite = false;
+            }
+        }
+
+        /// <summary>
+        /// 文面の+-!を見て強調のマニュアル設定
+        /// </summary>
+        public void ManualEmphasisSet()
+        {
+            foreach (var i in _items)
+            {
+                if (RegexOp.IsPulse(i.Item))
+                {
+                    i.EmphasisLevel = 1;
+                    i.IsWrite = true;
+                    i.Item = i.Item.Replace("+", "");
+                }
+                if (RegexOp.IsMinus(i.Item))
+                {
+                    i.EmphasisLevel = 0;
+                    i.IsWrite = false;
+                    i.Item = i.Item.Replace("-", "");
+                }
+                if (RegexOp.IsExclamation(i.Item))
+                {
+                    i.EmphasisLevel = 2;
+                    i.IsWrite = true;
+                    i.Item = i.Item.Replace("!", "");
+                }
             }
         }
     }

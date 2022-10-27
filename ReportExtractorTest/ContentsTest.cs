@@ -14,7 +14,11 @@ namespace ReportExtractorTest
             List<string> report = MyFile.ReadTextLines((@"ContentsTestData.txt"));
             ContentsEntity contents = new ContentsEntity(report);
 
-            contents.SetStrong(new List<int>() {27});
+            contents.GetLevel("### abc").Is<LevelEnum>(LevelEnum.Header3);
+            contents.GetLevel(" ### abc").Is<LevelEnum>(LevelEnum.Header3);
+            contents.GetLevel(" ### abc").Is<LevelEnum>(LevelEnum.Header3);
+
+            contents.SetStrong(new List<int>() { 27 });
 
             contents.Items[3].EmphasisLevel.Is(0);
             contents.Items[7].EmphasisLevel.Is(0);
@@ -60,6 +64,44 @@ namespace ReportExtractorTest
                 Console.WriteLine($"{row}\t{i.Level}\t{i.IsWrite}\t{i.EmphasisLevel}");
                 row++;
             }
+        }
+
+        [TestMethod]
+        public void ContentsTest2()
+        {
+            List<string> report2 = new List<string>();
+            report2.Add(" +1行目");
+            report2.Add(" !2行目");
+            report2.Add(" 3行目");
+            report2.Add(" -4行目");
+            report2.Add("!+5行目");
+
+            ContentsEntity contents2 = new ContentsEntity(report2);
+            contents2.SetStrong(new List<int>() { 4 });
+            contents2.Items[0].EmphasisLevel.Is(0);
+            contents2.Items[1].EmphasisLevel.Is(0);
+            contents2.Items[2].EmphasisLevel.Is(0);
+            contents2.Items[3].EmphasisLevel.Is(1);
+            contents2.Items[4].EmphasisLevel.Is(0);
+
+            contents2.ManualEmphasisSet();
+            contents2.Items[0].Item.Is(" 1行目");
+            contents2.Items[0].IsWrite.Is(true);
+            contents2.Items[0].EmphasisLevel.Is(1);
+            contents2.Items[1].Item.Is(" 2行目");
+            contents2.Items[1].IsWrite.Is(true);
+            contents2.Items[1].EmphasisLevel.Is(2);
+            contents2.Items[2].Item.Is(" 3行目");
+            contents2.Items[2].IsWrite.Is(false);
+            contents2.Items[2].EmphasisLevel.Is(0);
+            contents2.Items[3].Item.Is(" 4行目");
+            contents2.Items[3].IsWrite.Is(false);
+            contents2.Items[3].EmphasisLevel.Is(0);
+            contents2.Items[4].Item.Is("+5行目");
+            contents2.Items[4].IsWrite.Is(true);
+            contents2.Items[4].EmphasisLevel.Is(2);
+
+
         }
     }
 }

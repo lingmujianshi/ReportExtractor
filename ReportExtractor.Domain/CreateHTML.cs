@@ -455,8 +455,12 @@ namespace ReportExtractor.Domain
     }
 
     h3 {
+        margin-left: 1em;
         font-weight: bold;
         font-size: 12px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+
     }
 
     p{
