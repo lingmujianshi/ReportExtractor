@@ -160,9 +160,8 @@ namespace ReportExtractor.Domain
                         _isPSectionWrite = true;
                     }
                 }
-
-
             }
+            PEndProcess();
         }
 
         /// <summary>
@@ -193,10 +192,12 @@ namespace ReportExtractor.Domain
                     {
                         _items[i].IsWrite = true;
                     }
-
+                    
                 }
                 _isPStart = false;
                 _isPSectionWrite = false;
+
+                _h3 = 0;  //H3タグの行番号をリセット（重複防止）
             }
         }
 

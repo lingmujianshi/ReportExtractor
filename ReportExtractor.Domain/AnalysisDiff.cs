@@ -97,7 +97,7 @@ namespace ReportExtractor.Domain
                     {
                         lines.Add(count);
                     }
-                    if (!Regex.IsMatch(line, @"^\-"))
+                    if (!Regex.IsMatch(line, @"^\-") && !Regex.IsMatch(line, @"^\\"))
                     {
                         count++;
                     }
