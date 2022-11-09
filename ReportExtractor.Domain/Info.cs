@@ -17,6 +17,7 @@ namespace ReportExtractor.Domain
         public static string htmlFilename { get; private set; } = @"Report.html";
         public static string htmlMailFilename { get; private set; } = @"ReportMail.html";
 
+        public static string CssStyle { get; private set; } = @"";
 
         public static void ReadSetting()
         {
@@ -27,7 +28,8 @@ namespace ReportExtractor.Domain
             ReportFilename = Items[3];
             HtmlShortFilename = Items[4];
             htmlFilename = Items[5];
-
+            CssStyle = File.ReadAllText(@"style.css");
         }
+
     }
 }

@@ -435,54 +435,7 @@ namespace ReportExtractor.Domain
         readonly string _htmeHeaderEnd = @"<BODY>
 ";
 
-        readonly string _htmeCSS = @"<style>
-    body{
-        width: 40em;
-        margin-left: 5px;
-    }
-    h1 {
-        font-size: 20px;
-        font-weight: bold;
-        padding: 10px 20px;
- 
-    }
-    h2 {
-        font-size: 14px;
-        padding-left: 5px;
-        padding-bottom: 0px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
-
-    h3 {
-        margin-left: 1em;
-        font-weight: bold;
-        font-size: 12px;
-        margin-top: 2px;
-        margin-bottom: 2px;
-
-    }
-
-    p{
-        padding-top:0px;
-        font-style: normal;
-        font-size: 12px;
-        margin-left: 1em;
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-
-    em {
-        font-style: normal;
-        color: blue;
-    }
-
-    strong {
-        font-style: normal;
-        color: red;
-    }
-</style>
-";
+        readonly string _htmeCSS = @"<style>" + Info.CssStyle + @"</style>";
 
         /// <summary>
         /// HTMLフッタ部分（固定）
